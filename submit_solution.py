@@ -1,10 +1,9 @@
 import requests
-import json
 import hmac
 import hashlib
 import time
-import base64
 import struct
+
 
 def get_totp_token(secret, intervals_no):
     key = secret.encode()
@@ -14,15 +13,17 @@ def get_totp_token(secret, intervals_no):
     h = struct.unpack('>I', h[o:o+4])[0] & 0x7fffffff
     return str(h)[-10:].zfill(10)
 
+
 def generate_totp(email):
     secret = email + "HENNGECHALLENGE003"
     intervals_no = int(time.time()) // 30
     return get_totp_token(secret, intervals_no)
 
+
 data = {
-  "github_url": "https://gist.github.com/12458/f5cce5bb92e9c3bbd438dee1bef1e11e",
-  "contact_email": "shangen@gatech.edu",
-  "solution_language": "python"
+    "github_url": "[YOUR GIST URL HERE]",
+    "contact_email": "[YOUR EMAIL HERE]",
+    "solution_language": "python"
 }
 headers = {"Content-Type": "application/json"}
 # Generate TOTP
